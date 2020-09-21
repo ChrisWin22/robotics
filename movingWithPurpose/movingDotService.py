@@ -20,8 +20,7 @@ class MovingDotService:
             x *= -1
         dot.currentLocation[0] += x
         dot.currentLocation[1] += y
-        return [dot.currentLocation[0], dot.currentLocation[1]]
 
     def move(self, dot, endLocal):
-        dot.currentLocation = self.calcNewLocal(dot, endLocal)
+        self.calcNewLocal(dot, endLocal)
 
