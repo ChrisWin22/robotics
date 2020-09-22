@@ -10,14 +10,24 @@ class AckermanService:
         pygame.draw.circle(surface, ackerman.color, [ackerman.currentLocation[0], ackerman.currentLocation[1]], 5, 0)
 
     def move(self, ackerman, endLocal):
-        needToTurnDegrees = math.atan((endLocal[0] - ackerman.currentLocation[0])/(endLocal[1] - ackerman.currentLocation[1]))#theta
-        alpha = min(abs(needToTurnDegrees - ackerman.facingDirection), abs(needToTurnDegrees + (2 * math.pi) - ackerman.facingDirection), abs(needToTurnDegrees - (ackerman.facingDirection + 2 * math.pi)))
-        alpha = needToTurnDegrees
-        if alpha > 0.785398:
-            alpha = 0.785398
-        elif alpha < -0.785398:
-            alpha = -0.785398
-        thetaDot = ackerman.velocity * math.tan(alpha) #where I want my wheels facing
-        ackerman.currentLocation[0] += (ackerman.velocity * math.sin(thetaDot)) * .5
-        ackerman.currentLocation[1] += (-ackerman.velocity * math.cos(thetaDot)) * .5
-        ackerman.facingDirection += thetaDot * .5
+        print("Current Location: " , ackerman.currentLocation)
+        dt = .5
+        alpha = self.getAlpha(ackerman, endLocal)
+        ackerman.currentLocation[0] += math.sin(alpha) * dt * ackerman.velocity 
+        ackerman.currentLocation[1] += -1 * math.cos(alpha) * dt * ackerman.velocity
+        ackerman.facingDirection += (ackerman.velocity/ackerman.length) * math.tan(alpha) * dt
+        print("New Location: " , ackerman.currentLocation)
+
+
+
+    def getAlpha(self, ackerman, endLocal):
+        angleToGoal = math.atan((endLocal[1] - ackerman.currentLocation[1])/(endLocal[0] - ackerman.currentLocation[0]))
+        if angleToGoal == ackerman.facingDirection:
+            return 0
+        alpha = min(ackerman.maxSteeringAngle, abs(angleToGoal))
+        if angleToGoal < 0:
+            alpha *= -1
+        return alpha
+
+
+

@@ -24,8 +24,8 @@ importService.setFile("config_assignment3.json")
 presets = importService.getPresets()
 
 endLocal = presets.endLocation
-#startLocal = presets.startLocation
-startLocal = [75,75]
+startLocal = presets.startLocation
+#startLocal = [75,75]
 
 dot = MovingDot(currentLocation=startLocal)
 dotService = MovingDotService()
@@ -42,8 +42,8 @@ while keepRunning:
         if event.type == pygame.QUIT:
             keepRunning = False
             break
-    dotService.move(dot, endLocal)
-    dotService.draw(screen, dot)
+#    dotService.move(dot, endLocal)
+#    dotService.draw(screen, dot)
     ackermanService.move(ackerman, endLocal)
     ackermanService.draw(screen, ackerman)
     pygame.display.update()
