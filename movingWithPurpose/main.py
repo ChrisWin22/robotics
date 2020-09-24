@@ -6,6 +6,7 @@ from presets import Presets
 import pygame
 from ackerman import Ackerman
 from ackermanService import AckermanService
+import math
 
 def checkArrived(ackerman, dot, endLocal):
     global keepRunning
@@ -30,7 +31,7 @@ startLocal = presets.startLocation
 dot = MovingDot(currentLocation=startLocal)
 dotService = MovingDotService()
 
-ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=presets.maxSteeringAngle, facingDirection=presets.facingDirection,velocity=1)
+ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=5)
 ackermanService = AckermanService()
 
 keepRunning = True

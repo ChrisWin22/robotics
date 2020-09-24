@@ -1,5 +1,6 @@
 from presets import Presets
 import json
+import math
 
 class ImportService:
 
@@ -16,5 +17,5 @@ class ImportService:
         presets.endLocation = config['goal']
         presets.maxVelocity = config['maxVelocity']
         presets.maxSteeringAngle = config['maxSteeringAngle']
-        presets.facingDirection = presets.startLocation[2]
+        presets.facingDirection = math.radians(presets.startLocation[2])
         return presets
