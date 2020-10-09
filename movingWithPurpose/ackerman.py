@@ -10,7 +10,8 @@ class Ackerman:
         self.facingDirection = facingDirection
         self.length = length
         self.maxSteeringAngle = maxSteeringAngle
- #        self.rectangle = pygame.Rect(0,0,0,0)
+        self.currentLocation[2] = math.radians(self.currentLocation[2])
+#        self.rectangle = pygame.Rect(0,0,0,0)
 #        self.rectangle.width = width
 #        self.rectangle.height = length
 #        self.rectangle.center = (currentLocation[0], currentLocation[1])

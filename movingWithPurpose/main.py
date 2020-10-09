@@ -43,8 +43,8 @@ while keepRunning:
         if event.type == pygame.QUIT:
             keepRunning = False
             break
-#    dotService.move(dot, endLocal)
-#    dotService.draw(screen, dot)
+    dotService.move(dot, endLocal)
+    dotService.draw(screen, dot)
     ackermanService.move(ackerman, endLocal)
     ackermanService.draw(screen, ackerman)
     pygame.display.update()

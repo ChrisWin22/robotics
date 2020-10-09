@@ -30,7 +30,7 @@ def propogate(state, control):
 
     xDot = math.sin(theta)*vel*del_t
     yDot = math.cos(theta)*vel*del_t
-    thetaDot = vel / L * math.tan(control[0]) * del_t # Assume L=1
+    thetaDot = math.radians(vel / L * math.tan(control[0]) * del_t) # Assume L=1
 
     next_state[0] = state[0] + xDot
 
@@ -55,7 +55,7 @@ def test_prop():
 
     for i in range(100):
 
-        alpha = math.pi/4
+        alpha = -math.pi/4
 
         new_state = propogate(cur_state, [alpha])
 
