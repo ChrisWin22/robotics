@@ -1,0 +1,14 @@
+{
+  "start": [
+    0,
+    0,
+    45  
+  ],
+  "goal": [
+    57,
+    14,
+    90
+  ],
+  "maxVelocity": 5,
+  "maxSteeringAngle": 45
+}
