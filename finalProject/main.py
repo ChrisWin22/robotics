@@ -1,6 +1,4 @@
-from help.movingDot import MovingDot
 from services.importService import ImportService
-from help.movingDotService import MovingDotService
 import time
 from models.presets import Presets
 import pygame
@@ -29,9 +27,6 @@ def main():
     endLocal = presets.endLocation
     startLocal = presets.startLocation
     #startLocal = [75,75]
-
-    dot = MovingDot(currentLocation=startLocal)
-    dotService = MovingDotService()
 
     ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=5)
     ackermanService = AckermanService()
