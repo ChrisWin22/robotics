@@ -1,4 +1,4 @@
-from map import Map
+from models.map import Map
 import pygame
 
 class Rink(Map):

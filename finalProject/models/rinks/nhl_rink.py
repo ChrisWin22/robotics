@@ -1,4 +1,4 @@
-from rinks.rink import Rink
+from models.rinks.rink import Rink
 
 class NHLRink(Rink):
 

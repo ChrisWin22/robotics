@@ -1,7 +1,7 @@
 import pygame
-from rinks.nhl_rink import NHLRink
-from rinks.rink import Rink
-from rinks.international_rink import InternationalRink
+from models.rinks.nhl_rink import NHLRink
+from models.rinks.rink import Rink
+from models.rinks.international_rink import InternationalRink
 class RinkService:
 
     def __init__(self):

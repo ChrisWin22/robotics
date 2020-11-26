@@ -1,5 +1,5 @@
 import pytest
-from rinks.rink import Rink
+from models.rinks.rink import Rink
 
 
 def test_is_inside():

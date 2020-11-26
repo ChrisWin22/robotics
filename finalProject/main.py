@@ -1,12 +1,12 @@
-from movingDot import MovingDot
-from importService import ImportService
-from movingDotService import MovingDotService
+from help.movingDot import MovingDot
+from services.importService import ImportService
+from help.movingDotService import MovingDotService
 import time
-from presets import Presets
+from models.presets import Presets
 import pygame
-from ackerman import Ackerman
-from ackermanService import AckermanService
-from rinkService import RinkService
+from models.ackerman import Ackerman
+from services.ackermanService import AckermanService
+from services.rinkService import RinkService
 import math
 
 def checkArrived(ackerman, dot, endLocal):
