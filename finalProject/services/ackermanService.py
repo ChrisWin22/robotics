@@ -10,7 +10,7 @@ class AckermanService:
         return math.sqrt((goal_state[0] - cur_state[0])**2 + (goal_state[1] - cur_state[1])**2)
 
     def turn(self, angle, ackerman):
-        dt = .1
+        dt = .01
 
         newLocal = [None,None,None]
 
@@ -27,7 +27,7 @@ class AckermanService:
         return newLocal
 
     def getNewLocal(self, ackerman, endLocal):
-        turningOptions = [-math.pi/4, -math.pi/8, 0, math.pi/8, math.pi/4]
+        turningOptions = [-math.pi/3,-math.pi/4, -math.pi/8, 0, math.pi/8, math.pi/4, math.pi/3]
         bestLocal = [None,None,None]
         bestTurn = 0
         bestDistance = 1000000000        

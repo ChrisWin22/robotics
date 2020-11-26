@@ -13,46 +13,38 @@ def checkArrived(ackerman, endLocal):
     tempX = endLocal[0] - ackerman.currentLocation[0]
     tempY = endLocal[1] - ackerman.currentLocation[1]
     if (tempX < 1 and tempX > -1) and (tempY < 1 and tempY > -1):
-        time.sleep(3)
         return True
     return False
 
-def enterRink(ackerman, rink, rink_service, screen, presets, ackermanService):
-    entranceLocal = presets.dock 
+
+def moveAckerman(moveTo):
     while True:
         screen.fill((0,0,0))
-        rink_service.draw_dock(rink,presets.dock[0],presets.dock[1])
-        rink_service.drawRink(rink)
-        ackermanService.move(ackerman, entranceLocal)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                keepRunning = False
+                break
+        rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
+        rink_service.drawRink(mapping)
+        ackermanService.move(ackerman, moveTo)
         ackermanService.draw(screen, ackerman)
         pygame.display.update()
-        if checkArrived(ackerman, entranceLocal):
+        if checkArrived(ackerman, moveTo):
             return
 
+def enterRink():
+    entranceLocal = presets.dock[0], presets.dock[1]
+    moveAckerman(entranceLocal)
+    rinkOpening = presets.dock[0] + (4.7*mapping.SCALAR), presets.dock[1] + (2.3*mapping.SCALAR)/2
+    moveAckerman(rinkOpening)
 
 
 def main():
     pygame.init()
 
-    rink_service = RinkService()
-    importService = ImportService()
-    importService.setFile("config_assignment3.json")
-    presets = importService.getPresets()
+    enterRink()
 
-    endLocal = presets.endLocation
-    startLocal = presets.startLocation
-    #startLocal = [75,75]
-
-    ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=3)
-    ackermanService = AckermanService()
-
-    keepRunning = True
-    mapping = rink_service.determine_rink(presets.name)
-    screen = mapping.display
-
-    enterRink(ackerman, mapping, rink_service, screen, presets, ackermanService)
-
-    while keepRunning:
+    while True:
         screen.fill((0,0,0))
         rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
         rink_service.drawRink(mapping)
@@ -67,6 +59,15 @@ def main():
         # time.sleep(.05)
     pygame.quit()
 
-
+#Needed Global Variables
+rink_service = RinkService()
+importService = ImportService()
+importService.setFile("config_assignment3.json")
+presets = importService.getPresets()
+startLocal = presets.startLocation
+ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=1, length=.8)
+ackermanService = AckermanService()
+mapping = rink_service.determine_rink(presets.name)
+screen = mapping.display
 if __name__ == "__main__":
     main()
