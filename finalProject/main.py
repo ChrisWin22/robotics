@@ -44,7 +44,8 @@ def main():
 
     while keepRunning:
         screen.fill((0,0,0))
-        rink_service.drawRink(screen, mapping)
+        rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
+        rink_service.drawRink(mapping)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 keepRunning = False

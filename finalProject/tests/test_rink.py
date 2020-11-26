@@ -1,5 +1,5 @@
 import pytest
-from rink import Rink
+from rinks.rink import Rink
 
 
 def test_is_inside():
@@ -7,7 +7,7 @@ def test_is_inside():
     y=400
     test_rink = Rink(x=x,y=y)
 
-    assert test_rink.is_inside(x-30*test_rink.SCALAR, y-40*test_rink.SCALAR)
+    assert test_rink.is_inside(x-1*test_rink.SCALAR, y-1*test_rink.SCALAR)
 
 def test_not_is_inside():
     x=500

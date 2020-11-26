@@ -19,4 +19,5 @@ class ImportService:
         presets.maxSteeringAngle = config['maxSteeringAngle']
         presets.facingDirection = math.radians(presets.startLocation[2])
         presets.name = config['rink']['name']
+        presets.dock = config['rink']['dockCoordinates']
         return presets
