@@ -9,6 +9,13 @@
     57,
     90
   ],
+  "rink": {
+    "dockCoordinates": [
+      125,
+      140
+    ],
+    "name": "NHL"
+  },
   "maxVelocity": 5,
   "maxSteeringAngle": 45
 }

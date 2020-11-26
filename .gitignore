@@ -1,2 +1,5 @@
 movingWithPurpose/__pycache__
 *.zip
+__pycache__
+.venv/
+.vscode/
