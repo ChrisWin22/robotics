@@ -12,6 +12,7 @@ class Rink(Map):
         self.top = top
         self.radius = radius
         self.rink = pygame.Rect(left, top, self.rink_x * self.SCALAR, self.rink_y * self.SCALAR)
+        self.rinkBorder = pygame.Rect(left-5, top-5, self.rink_x * self.SCALAR + 10, self.rink_y * self.SCALAR + 10)
     
     def get_scaled_x(self):
         return self.rink_x * self.SCALAR

@@ -65,7 +65,9 @@ importService = ImportService()
 importService.setFile("config_assignment3.json")
 presets = importService.getPresets()
 startLocal = presets.startLocation
-ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=1, length=.8)
+img = pygame.image.load('images/zoomboni.png')
+img = pygame.transform.scale(img, (40, 20))
+ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=2, length=.8, img=img)
 ackermanService = AckermanService()
 mapping = rink_service.determine_rink(presets.name)
 screen = mapping.display

@@ -39,7 +39,7 @@ class AckermanService:
                 bestDistance = newDistance
                 bestLocal = newLocal
                 bestTurn = turn
-        print(bestTurn)
+        # print(bestTurn)
         # bestLocal = self.turn(math.pi/4, ackerman)
         return bestLocal
 
@@ -59,14 +59,16 @@ class AckermanService:
         return alpha
 
     def draw(self, surface, ackerman):
-        pygame.draw.circle(surface, ackerman.color, [ackerman.currentLocation[0], ackerman.currentLocation[1]], 5, 0)
+        # pygame.draw.circle(surface, ackerman.color, [ackerman.currentLocation[0], ackerman.currentLocation[1]], 5, 0)
+        loc = ackerman.img.get_rect().center 
+        rot_sprite = pygame.transform.rotate(ackerman.img, math.degrees(ackerman.facingDirection + 90) )
+        rot_sprite.get_rect().center = loc
+        surface.blit(rot_sprite, (ackerman.currentLocation[0] - 20, ackerman.currentLocation[1] - 20) )
 
     def move(self, ackerman, endLocal):
         ackerman.currentLocation = self.getNewLocal(ackerman, endLocal)
         ackerman.facingDirection = ackerman.currentLocation[2]
-        print(ackerman.currentLocation)
-
-
+        # print(ackerman.currentLocation)
 
 
 

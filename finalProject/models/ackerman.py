@@ -3,7 +3,7 @@ import pygame
 
 class Ackerman:
 
-    def __init__(self, currentLocation = [0,0], velocity=0, color=[255,0,0], facingDirection = 0, maxSteeringAngle = 0, length = 1):
+    def __init__(self, img, currentLocation = [0,0], velocity=0, color=[255,0,0], facingDirection = 0, maxSteeringAngle = 0, length = 1):
         self.color = color
         self.currentLocation = currentLocation
         self.velocity = velocity
@@ -11,6 +11,7 @@ class Ackerman:
         self.length = length
         self.maxSteeringAngle = maxSteeringAngle
         self.currentLocation[2] = math.radians(self.currentLocation[2])
+        self.img = img
 #        self.rectangle = pygame.Rect(0,0,0,0)
 #        self.rectangle.width = width
 #        self.rectangle.height = length
