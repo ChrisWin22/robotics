@@ -37,27 +37,36 @@ def enterRink():
     rinkOpening = presets.dock[0] + (4.7*mapping.SCALAR), presets.dock[1] + (2.3*mapping.SCALAR)/2
     moveAckerman(rinkOpening)
 
+def drawPointAtLocal(local):
+    pygame.draw.circle(screen, [0,255,0], [local[0],local[1]], 5, 0)
+    pygame.display.update()
+
+
 
 def firstLap():
     turningOptions = [0, 1]
-    moveDistance = 70
+    moveDistance = 10
     while True:
         for o in turningOptions:
             if o == 0:
                 nextLocation = ackermanService.turn(o,ackerman, moveDistance)
+                drawPointAtLocal(nextLocation)
                 # nextLocation = [nextLocation[0], nextLocation[1]]
-                if mapping.is_inside(nextLocation[0], nextLocation[1]):
+                if mapping.isInsideRink(nextLocation[0], nextLocation[1]):
                     moveAckerman(nextLocation)
                     break
                 else:
                     print("need to turn")
             else:
                 for t in range(1000, 2, -1):
-                    degree = -math.pi/t
+                    degree = -math.pi/t 
                     print("turning ", degree)
                     nextLocation = ackermanService.turn(degree,ackerman, moveDistance)
+                    drawPointAtLocal(nextLocation)
+                    if ackerman.currentLocation[0] > 683 and ackerman.currentLocation[1] > 154 and nextLocation[0] < 685:
+                        print("I'm there")
                     # nextLocation = [nextLocation[0], nextLocation[1]]
-                    if mapping.is_inside(nextLocation[0], nextLocation[1]):
+                    if mapping.isInsideRink(nextLocation[0], nextLocation[1]):
                         moveAckerman(nextLocation)
                         break
                     else:
@@ -98,7 +107,7 @@ presets = importService.getPresets()
 startLocal = presets.startLocation
 img = pygame.image.load('images/zoomboni.png')
 img = pygame.transform.scale(img, (40, 20))
-ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=2, length=.8, img=img)
+ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=5, length=.8, img=img)
 ackermanService = AckermanService()
 mapping = rink_service.determine_rink(presets.name)
 screen = mapping.display

@@ -4,6 +4,7 @@ import math
 
 class Rink(Map):
     SCALAR = 10
+    OFFSET = 5
 
     def __init__(self, x=197, y=98.4, left=75, top = 75, radius = 28):
         super().__init__()
@@ -49,9 +50,63 @@ class Rink(Map):
             return True
         return False
 
+    def isInsideRink(self, x, y):
+        _top = self.top
+        _bottom = self.top + self.get_scaled_y()
+        _left = self.left
+        _right = self.left + self.get_scaled_x()
+        r = self.radius * self.SCALAR
+
+        #Make sure in full rectangle
+        if x < _left or x > _right:
+            return False
+        if y < _top or y > _bottom:
+            return False
+
+        #Check if in inner rectangle
+        if x > _left + r and x < _right - r:
+            return True
+
+        #Check if in second innner rectangle
+        if y > _top + r and y < _bottom - r:
+            return True
+        
+        #Check if in top left
+        center = [_left + r, _top + r]
+        if isInCircle(x, y, center, r):
+            return True
+
+        #Check if in top right
+        center = [_right - r, _top + r]
+        if isInCircle(x, y, center, r):
+            return True
+
+        #Check if in bottom left
+        center = [_left + r, _bottom - r]
+        if isInCircle(x,y,center,r):
+            return True
+
+        #Check if in bottom right
+        center = [_right - r, _bottom - r]
+        if isInCircle(x, y, center, r):
+            return True
+
+        #Not in rink
+        return False
+
+
+    
+def isInCircle(x, y, center, radius):
+    distance = math.sqrt((x - center[0]) ** 2 + (y - center[1]) **2) 
+    if distance < radius:
+        return True
+    return False
+
+
+
 def is_in_circle(g1,g2,radius):
     distance = math.sqrt((g1[0]-g2[0]) ** 2 + (g1[1]-g2[1]) ** 2 )
-    if distance > radius:
+    if distance < radius:
         return True
     else:
         return False

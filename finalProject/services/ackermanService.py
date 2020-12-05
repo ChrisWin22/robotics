@@ -31,13 +31,38 @@ class AckermanService:
         bestTurn = 0
         bestDistance = 1000000000        
 
-        for turn in turningOptions:
-            newLocal = self.turn(turn, ackerman)
+        for t in range(1000, 2, -1):
+            degree = -math.pi/t
+            newLocal = self.turn(degree, ackerman)
             newDistance = self.distance(newLocal, endLocal)
             if newDistance < bestDistance:
                 bestDistance = newDistance
                 bestLocal = newLocal
-                bestTurn = turn
+                bestTurn = degree
+        
+        newLocal = self.turn(0, ackerman)
+        newDistance = self.distance(newLocal, endLocal)
+        if newDistance < bestDistance:
+            bestDistance = newDistance
+            bestLocal = newLocal
+            bestTurn = degree
+        
+        for t in range(8, 2, -1):
+            degree = math.pi/t
+            newLocal = self.turn(degree, ackerman)
+            newDistance = self.distance(newLocal, endLocal)
+            if newDistance < bestDistance:
+                bestDistance = newDistance
+                bestLocal = newLocal
+                bestTurn = degree
+        
+        # for turn in turningOptions:
+        #     newLocal = self.turn(turn, ackerman)
+        #     newDistance = self.distance(newLocal, endLocal)
+        #     if newDistance < bestDistance:
+        #         bestDistance = newDistance
+        #         bestLocal = newLocal
+        #         bestTurn = turn
         # print(bestTurn)
         # bestLocal = self.turn(math.pi/4, ackerman)
         return bestLocal
