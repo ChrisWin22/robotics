@@ -1,10 +1,12 @@
 import pygame
 import math
+from models.rinks.rink import Rink
 
 class AckermanService:
 
     def __init__(self):
         super().__init__()
+        self.rink = Rink()
 
     def distance(self, cur_state, goal_state):
         return math.sqrt((goal_state[0] - cur_state[0])**2 + (goal_state[1] - cur_state[1])**2)
@@ -83,15 +85,23 @@ class AckermanService:
         return alpha
 
     def draw(self, surface, ackerman):
-        # pygame.draw.circle(surface, ackerman.color, [ackerman.currentLocation[0], ackerman.currentLocation[1]], 5, 0)
+        for location in ackerman.visited:
+            if self.rink.is_inside(location[0], location[1]):
+                pygame.draw.circle(surface, ackerman.pathColor, [location[0], location[1]], 10, 0)
+        
+        pygame.draw.circle(surface, ackerman.color, [ackerman.currentLocation[0], ackerman.currentLocation[1]], 5, 0)
         loc = ackerman.img.get_rect().center 
-        rot_sprite = pygame.transform.rotate(ackerman.img, math.degrees(ackerman.facingDirection + 90) )
+        rot_sprite = pygame.transform.rotate(ackerman.img, math.degrees(ackerman.facingDirection) + 90 )
         rot_sprite.get_rect().center = loc
-        surface.blit(rot_sprite, (ackerman.currentLocation[0] - 20, ackerman.currentLocation[1] - 20) )
+        surface.blit(rot_sprite, (ackerman.currentLocation[0] - 10, ackerman.currentLocation[1] - 10) )
 
     def move(self, ackerman, endLocal):
         ackerman.currentLocation = self.getNewLocal(ackerman, endLocal)
         ackerman.facingDirection = ackerman.currentLocation[2]
+        ackerman.pathIncrement = ackerman.pathIncrement + 1
+        if ackerman.pathIncrement == 50:
+            ackerman.visited.append(ackerman.currentLocation)
+            ackerman.pathIncrement = 0
         # print(ackerman.currentLocation)
 
 

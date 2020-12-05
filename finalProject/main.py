@@ -36,6 +36,7 @@ def enterRink():
     moveAckerman(entranceLocal)
     rinkOpening = presets.dock[0] + (4.7*mapping.SCALAR), presets.dock[1] + (2.3*mapping.SCALAR)/2
     moveAckerman(rinkOpening)
+    moveAckerman(mapping.rink.center)
 
 def drawPointAtLocal(local):
     pygame.draw.circle(screen, [0,255,0], [local[0],local[1]], 5, 0)
