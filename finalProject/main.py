@@ -37,6 +37,7 @@ def enterRink():
     moveAckerman(entranceLocal)
     rinkOpening = presets.dock[0] + (4.7*mapping.SCALAR), presets.dock[1] + (2.3*mapping.SCALAR)/2
     moveAckerman(rinkOpening)
+    moveAckerman(mapping.rink.center)
 
 
 def main():
@@ -67,7 +68,7 @@ presets = importService.getPresets()
 startLocal = presets.startLocation
 img = pygame.image.load('images/zoomboni.png')
 img = pygame.transform.scale(img, (40, 20))
-ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=2, length=.8, img=img)
+ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(presets.maxSteeringAngle), facingDirection=presets.facingDirection,velocity=10, length=.8, img=img)
 ackermanService = AckermanService()
 mapping = rink_service.determine_rink(presets.name)
 screen = mapping.display

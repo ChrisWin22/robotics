@@ -12,6 +12,9 @@ class Ackerman:
         self.maxSteeringAngle = maxSteeringAngle
         self.currentLocation[2] = math.radians(self.currentLocation[2])
         self.img = img
+        self.visited = []
+        self.pathIncrement = 0
+        self.pathColor = [77,238,234,10]
 #        self.rectangle = pygame.Rect(0,0,0,0)
 #        self.rectangle.width = width
 #        self.rectangle.height = length

@@ -53,6 +53,9 @@ class RinkService:
         pygame.draw.circle(ice_rink.display, [255, 255, 255], (ice_rink.rink.center[0] + 160, ice_rink.rink.center[1] + 70), circuleInnerRadius)
         pygame.draw.circle(ice_rink.display, [255, 0, 0], (ice_rink.rink.center[0] + 160, ice_rink.rink.center[1] + 70), dotRadius)
     
+        
+        
+        
     def draw_dock(self, ice_rink, left, top):
         pygame.draw.rect(ice_rink.display, [125,125,125], pygame.Rect(left, top, round(4.7 * ice_rink.SCALAR), round(2.3*ice_rink.SCALAR)))
     
