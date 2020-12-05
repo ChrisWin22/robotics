@@ -1,5 +1,6 @@
 from models.map import Map
 import pygame
+import math
 
 class Rink(Map):
     SCALAR = 10
@@ -20,4 +21,36 @@ class Rink(Map):
         return self.rink_y * self.SCALAR
     
     def is_inside(self, x, y):
-        return True if x > self.left and x < (self.left + self.rink_x * self.SCALAR) and y > self.top and y < (self.top + self.rink_y * self.SCALAR) else False
+        bottom = self.top + self.rink_y * self.SCALAR
+        right = self.left + self.rink_x * self.SCALAR
+
+        true_radius = self.radius*self.SCALAR
+
+        if x > self.left and x < (right) and y > self.top and y < (bottom):
+            if x > self.left + true_radius:
+                #check top left
+                if y > self.top + true_radius:
+                    if not is_in_circle([x,y], [self.left+true_radius, self.top+true_radius],true_radius):
+                        return False
+                #check bottom left
+                if y < bottom - true_radius:
+                    if not is_in_circle([x,y], [self.left+true_radius, bottom+true_radius],true_radius):
+                        return False
+            if x < right - true_radius:
+                #check top right
+                if y > self.top + true_radius:
+                    if not is_in_circle([x,y], [right+true_radius, self.top+true_radius],true_radius):
+                        return False
+                # check bottom right
+                if y < bottom - true_radius:
+                    if not is_in_circle([x,y], [right+true_radius, self.top+true_radius],true_radius):
+                        return False
+            return True
+        return False
+
+def is_in_circle(g1,g2,radius):
+    distance = math.sqrt((g1[0]-g2[0]) ** 2 + (g1[1]-g2[2]) ** 2 )
+    if distance > radius:
+        return True
+    else:
+        return False
