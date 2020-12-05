@@ -22,7 +22,6 @@ def moveAckerman(moveTo):
         screen.fill((0,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                keepRunning = False
                 break
         rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
         rink_service.drawRink(mapping)
@@ -39,25 +38,57 @@ def enterRink():
     moveAckerman(rinkOpening)
 
 
+def firstLap():
+    turningOptions = [0, 1]
+    moveDistance = 70
+    while True:
+        for o in turningOptions:
+            if o == 0:
+                nextLocation = ackermanService.turn(o,ackerman, moveDistance)
+                # nextLocation = [nextLocation[0], nextLocation[1]]
+                if mapping.is_inside(nextLocation[0], nextLocation[1]):
+                    moveAckerman(nextLocation)
+                    break
+                else:
+                    print("need to turn")
+            else:
+                for t in range(1000, 2, -1):
+                    degree = -math.pi/t
+                    print("turning ", degree)
+                    nextLocation = ackermanService.turn(degree,ackerman, moveDistance)
+                    # nextLocation = [nextLocation[0], nextLocation[1]]
+                    if mapping.is_inside(nextLocation[0], nextLocation[1]):
+                        moveAckerman(nextLocation)
+                        break
+                    else:
+                        print("need to turn more")
+
+
+
+def resurface():
+    enterRink()
+    firstLap()
+
+
 def main():
     pygame.init()
 
-    enterRink()
+    resurface()
 
-    while True:
-        screen.fill((0,0,0))
-        rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
-        rink_service.drawRink(mapping)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                keepRunning = False
-                break
-        # ackermanService.move(ackerman, endLocal)
-        ackermanService.draw(screen, ackerman)
-        pygame.display.update()
-        # checkArrived(ackerman, endLocal)
-        # time.sleep(.05)
-    pygame.quit()
+    # while True:
+    #     screen.fill((0,0,0))
+    #     rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
+    #     rink_service.drawRink(mapping)
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             keepRunning = False
+    #             break
+    #     # ackermanService.move(ackerman, endLocal)
+    #     ackermanService.draw(screen, ackerman)
+    #     pygame.display.update()
+    #     # checkArrived(ackerman, endLocal)
+    #     # time.sleep(.05)
+    # pygame.quit()
 
 #Needed Global Variables
 rink_service = RinkService()
@@ -71,5 +102,7 @@ ackerman = Ackerman(currentLocation=startLocal, maxSteeringAngle=math.radians(pr
 ackermanService = AckermanService()
 mapping = rink_service.determine_rink(presets.name)
 screen = mapping.display
+
+
 if __name__ == "__main__":
     main()

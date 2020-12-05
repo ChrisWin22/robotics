@@ -50,7 +50,7 @@ class Rink(Map):
         return False
 
 def is_in_circle(g1,g2,radius):
-    distance = math.sqrt((g1[0]-g2[0]) ** 2 + (g1[1]-g2[2]) ** 2 )
+    distance = math.sqrt((g1[0]-g2[0]) ** 2 + (g1[1]-g2[1]) ** 2 )
     if distance > radius:
         return True
     else:

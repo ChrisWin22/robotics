@@ -9,8 +9,7 @@ class AckermanService:
     def distance(self, cur_state, goal_state):
         return math.sqrt((goal_state[0] - cur_state[0])**2 + (goal_state[1] - cur_state[1])**2)
 
-    def turn(self, angle, ackerman):
-        dt = .01
+    def turn(self, angle, ackerman, dt=.01):
 
         newLocal = [None,None,None]
 
