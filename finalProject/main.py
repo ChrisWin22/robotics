@@ -25,6 +25,16 @@ def moveAckerman(moveTo):
                 break
         rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
         rink_service.drawRink(mapping)
+
+        for location in ackerman.visited:
+            pygame.draw.circle(screen, ackerman.pathColor, [location[0], location[1]], 10, 0)
+
+        ackerman.pathIncrement = ackerman.pathIncrement + 1
+        if ackerman.pathIncrement == 50:
+            if mapping.isInsideRink(ackerman.currentLocation[0], ackerman.currentLocation[1]):
+                ackerman.visited.append(ackerman.currentLocation)
+                ackerman.pathIncrement = 0
+
         ackermanService.move(ackerman, moveTo)
         ackermanService.draw(screen, ackerman)
         pygame.display.update()
@@ -35,8 +45,18 @@ def enterRink():
     entranceLocal = presets.dock[0], presets.dock[1]
     moveAckerman(entranceLocal)
     rinkOpening = presets.dock[0] + (4.7*mapping.SCALAR), presets.dock[1] + (2.3*mapping.SCALAR)/2
-    moveAckerman(rinkOpening)
-    moveAckerman(mapping.rink.center)
+    # moveAckerman(rinkOpening)
+    
+    #Move to top left of rink
+    r = mapping.radius * mapping.SCALAR
+    tempX = r*math.cos(45)
+    tempY = r*math.sin(45)
+    xDot = r - tempX
+    yDot = r - tempY
+    x = mapping.left + xDot
+    y = mapping.top + yDot
+    moveAckerman([x,y])
+    # moveAckerman(mapping.rink.center)
 
 def drawPointAtLocal(local):
     pygame.draw.circle(screen, [0,255,0], [local[0],local[1]], 5, 0)
