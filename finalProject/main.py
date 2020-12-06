@@ -54,6 +54,7 @@ def getTopRightOfRink(offset):
     yDot = r - tempY
     x = mapping.left + xDot
     y = mapping.top + yDot
+    drawPointAtLocal([x,y])
     return [x,y]
 
 def enterRink(offset):
@@ -71,15 +72,23 @@ def drawPointAtLocal(local):
     pygame.draw.circle(screen, [0,255,0], [local[0],local[1]], 5, 0)
     pygame.display.update()
 
-def finishedLap(offset):
-    if ackerman.currentLocation[1] < presets.dock[1] or ackerman.currentLocation[1] > presets.dock[1] + (2.3*mapping.SCALAR):
-        return False
-    if math.sqrt(ackerman.currentLocation[0] ** 2 + (mapping.left + offset) ** 2) > 10:
-        return False
-    return True
+def finishedLap(nextLocation, offset):
+    global timer
+    distance = nextLocation[0] - (mapping.left + offset)
+    if distance < 15 and timer > 5:
+        finished = ackermanService.hasVisited(ackerman, nextLocation[0], nextLocation[1])
+        if finished == True:
+            timer = 0
+        return finished
+    # if ackerman.currentLocation[1] < presets.dock[1] or ackerman.currentLocation[1] > presets.dock[1] + (2.3*mapping.SCALAR):
+    #     return False
+    # if math.sqrt(ackerman.currentLocation[0] ** 2 + (mapping.left + offset) ** 2) > 10:
+    #     return False
+    # return True
 
 
 def lap(offset=0):
+    global timer
     # endLocal = getTopRightOfRink(offset)
     turningOptions = [0, 1]
     moveDistance = 3
@@ -88,8 +97,11 @@ def lap(offset=0):
             if o == 0:
                 nextLocation = ackermanService.turn(o,ackerman, moveDistance)
                 drawPointAtLocal(nextLocation)
+                if finishedLap(nextLocation, offset):
+                    return
                 # nextLocation = [nextLocation[0], nextLocation[1]]
                 if mapping.isInsideRink(nextLocation[0], nextLocation[1], offset):
+                    timer += 1
                     moveAckerman(nextLocation)
                     print("=" * 25)
                     print("Moved to: ", ackerman.currentLocation)
@@ -99,23 +111,26 @@ def lap(offset=0):
                     degree = -math.pi/t 
                     nextLocation = ackermanService.turn(degree,ackerman, moveDistance)
                     drawPointAtLocal(nextLocation)
+                    if finishedLap(nextLocation, offset):
+                        return
                     # nextLocation = [nextLocation[0], nextLocation[1]]
                     if mapping.isInsideRink(nextLocation[0], nextLocation[1], offset):
+                        timer += 1
                         moveAckerman(nextLocation)
                         print("=" * 25)
                         print("Moved to: ", ackerman.currentLocation)
                         break
         
-        if finishedLap(offset):
-            return
+def moveToStartingPlace(offset):
+    moveAckerman(getTopRightOfRink(offset + 40))
 
 
 
 def resurface():
-    deltaOffset = 10
+    deltaOffset = 15
     startingOffset = 10
     currentOffset = startingOffset
-    # enterRink(currentOffset)
+    enterRink(currentOffset)
 
 
     while True:
@@ -123,13 +138,17 @@ def resurface():
         lap(currentOffset)
         print("End of lap ", currentOffset/10)
         currentOffset += deltaOffset
+        # moveToStartingPlace(currentOffset)
+        nextLocal = ackermanService.turn(-math.pi/6, ackerman, 6)
+        moveAckerman(nextLocal)
+
 
 
 
 def main():
     pygame.init()
-    ackerman.currentLocation = [127.71682584204702, 316.671844709084, -1.9792726740856632]
-    ackerman.facingDirection = -1.9792726740856632
+    # ackerman.currentLocation = [127.71682584204702, 316.671844709084, -1.9792726740856632]
+    # ackerman.facingDirection = -1.9792726740856632
     rink_service.draw_dock(mapping,presets.dock[0],presets.dock[1])
     rink_service.drawRink(mapping)
     ackermanService.draw(screen, ackerman)
@@ -153,6 +172,8 @@ def main():
     # pygame.quit()
 
 #Needed Global Variables
+global timer
+timer = 0
 rink_service = RinkService()
 importService = ImportService()
 importService.setFile("config_assignment3.json")

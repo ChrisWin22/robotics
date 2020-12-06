@@ -79,7 +79,7 @@ class AckermanService:
         deltaAlpha = abs(angleToGoal - ackerman.facingDirection)
         if deltaAlpha < .01:
             return 0
-        ilpha = min(ackerman.maxSteeringAngle, abs(angleToGoal - ackerman.facingDirection))
+        alpha = min(ackerman.maxSteeringAngle, abs(angleToGoal - ackerman.facingDirection))
         if angleToGoal - ackerman.facingDirection < 0:
             alpha *= -1
         return alpha
@@ -97,5 +97,12 @@ class AckermanService:
         ackerman.currentLocation = self.getNewLocal(ackerman, endLocal)
         ackerman.facingDirection = ackerman.currentLocation[2]
         # print(ackerman.currentLocation)
+
+    def hasVisited(self, ackerman, x, y):
+        for local in ackerman.visited:
+            distance = math.sqrt((x - local[0]) ** 2 + (y - local[1]) ** 2)
+            if distance < 10:
+                return True
+        return False
 
 
