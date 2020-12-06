@@ -50,12 +50,12 @@ class Rink(Map):
             return True
         return False
 
-    def isInsideRink(self, x, y):
-        _top = self.top
-        _bottom = self.top + self.get_scaled_y()
-        _left = self.left
-        _right = self.left + self.get_scaled_x()
-        r = self.radius * self.SCALAR
+    def isInsideRink(self, x, y, off=0):
+        _top = self.top + off
+        _bottom = self.top + self.get_scaled_y() - off
+        _left = self.left + off
+        _right = self.left + self.get_scaled_x() - off
+        r = self.radius * self.SCALAR - off
 
         #Make sure in full rectangle
         if x < _left or x > _right:
