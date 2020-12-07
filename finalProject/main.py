@@ -8,6 +8,7 @@ from services.rinkService import RinkService
 import math
 from models.rinks import rink
 
+timer = 0
 
 def checkArrived(ackerman, endLocal):
     tempX = endLocal[0] - ackerman.currentLocation[0]
@@ -74,17 +75,14 @@ def drawPointAtLocal(local):
 
 def finishedLap(nextLocation, offset):
     global timer
+    if timer < 7:
+        return False
     distance = nextLocation[0] - (mapping.left + offset)
-    if distance < 15 and timer > 5:
+    if distance < 15:
         finished = ackermanService.hasVisited(ackerman, nextLocation[0], nextLocation[1])
         if finished == True:
             timer = 0
         return finished
-    # if ackerman.currentLocation[1] < presets.dock[1] or ackerman.currentLocation[1] > presets.dock[1] + (2.3*mapping.SCALAR):
-    #     return False
-    # if math.sqrt(ackerman.currentLocation[0] ** 2 + (mapping.left + offset) ** 2) > 10:
-    #     return False
-    # return True
 
 
 def lap(offset=0):
@@ -139,8 +137,12 @@ def resurface():
         print("End of lap ", currentOffset/10)
         currentOffset += deltaOffset
         # moveToStartingPlace(currentOffset)
-        nextLocal = ackermanService.turn(-math.pi/6, ackerman, 6)
+        nextLocal = ackermanService.turn(-math.pi/6, ackerman, 10)
         moveAckerman(nextLocal)
+
+        # newTop = mapping.top + currentOffset + 5
+        # newLeft = mapping.left + currentOffset + 5
+        # moveAckerman([newLeft, newTop])
 
 
 
@@ -172,8 +174,6 @@ def main():
     # pygame.quit()
 
 #Needed Global Variables
-global timer
-timer = 0
 rink_service = RinkService()
 importService = ImportService()
 importService.setFile("config_assignment3.json")
